@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorator="fragments/layout">
+<head>
+    <title>演员管理</title>
+
+    <link th:href="@{/scripts/pagination/pagination.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/scripts/artDialog/default.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/scripts/My97DatePicker/skin/WdatePicker.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/styles/index.css}" rel="stylesheet"  type="text/css"/>
+
+    <script th:src="@{/scripts/pagination/jquery.pagination.js}"></script>
+    <script th:src="@{/scripts/jquery.smartselect-1.1.min.js}"></script>
+    <script th:src="@{/scripts/My97DatePicker/WdatePicker.js}"></script>
+    <script th:src="@{/scripts/actor/list.js}"></script>
+</head>
+<body>
+<div class="locationLine" layout:fragment="prompt">
+    当前位置：首页 &gt; <em >演员管理</em>
+</div>
+
+<div class="statisticBox w-782"  layout:fragment="content">
+    <form id="queryForm" method="get">
+    <div class="radiusGrayBox782">
+        <div class="radiusGrayTop782"></div>
+        <div class="radiusGrayMid782">
+            <div class="dataSearchBox forUserRadius">
+                <ul>
+                    <li>
+                        <label class="preInpTxt f-left">演员名称</label>
+                        <input type="text" class="inp-list f-left w-200" placeholder="按演员名称搜索" id="name"  name="name"/>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" class="blueBtn-62X30 f-right" id="searchBtn">查询</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="newBtnBox">
+        <input type="hidden" id="m_ck" />
+        <a id="addBtn" class="blueBtn-62X30" href="javascript:void(0)">新增</a>
+    </div>
+    <div class="dataDetailList mt-12">
+        <table id="results" class="dataListTab">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>生日</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody id="tbodyContent">
+            </tbody>
+        </table>
+        <div class="tableFootLine">
+            <div class="pagebarList pagination"/>
+        </div>
+    </div>
+    </form>
+</div>
+
+</body>
+</html>

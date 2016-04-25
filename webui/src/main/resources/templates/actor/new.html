@@ -1,0 +1,30 @@
+
+<script th:src="@{/scripts/actor/new.js}"></script>
+
+<form id="saveForm" action="./save" method="post">
+    <table class="addNewInfList">
+        <tr>
+            <th>姓名</th>
+            <td width="240"><input class="inp-list w-200 clear-mr f-left" type="text" id="name" name="name" maxlength="16" /></td>
+            <th>生日</th>
+            <td>
+                <input  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" class="inp-list w-200 clear-mr f-left"  id="born" name="born"/>
+            </td>
+        </tr>
+        <tr>
+            <th>性别</th>
+            <td width="240">
+                <select name="sex" id="sex">
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+    <div class="bottomBtnBox">
+        <a class="btn-93X38 saveBtn" href="javascript:void(0)">确定</a>
+        <a class="btn-93X38 backBtn" href="javascript: closeDialog()">返回</a>
+    </div>
+</form>
+
+

@@ -1,0 +1,37 @@
+<link th:href="@{/styles/imageselect.css}" rel="stylesheet" type="text/css" />
+<script th:src="@{/scripts/imageselect.js}"></script>
+<script th:src="@{/scripts/movie/new.js}"></script>
+
+<form id="saveForm" action="./save" method="post">
+    <table class="addNewInfList">
+        <tr>
+            <th>名称</th>
+            <td><input class="inp-list w-200 clear-mr f-left" type="text"   id="name" name="name"  maxlength="120" /></td>
+            <th>剧照</th>
+            <td width="240">
+                <select name="photo" id="photo">
+                    <option th:each="file:${files}"
+                            th:value="${file}"
+                            th:text="${file}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>日期</th>
+            <td>
+                <input  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" class="inp-list w-200 clear-mr f-left" id="createDate" name="createDate"/>
+            </td>
+        </tr>
+    </table>
+    <div class="bottomBtnBox">
+        <a class="btn-93X38 saveBtn" href="javascript:void(0)">确定</a>
+        <a class="btn-93X38 backBtn" href="javascript: closeDialog()">返回</a>
+    </div>
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[name=photo]').ImageSelect({dropdownWidth:425});
+    });
+</script>
+

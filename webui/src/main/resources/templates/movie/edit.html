@@ -1,0 +1,67 @@
+<link th:href="@{/styles/imageselect.css}" rel="stylesheet" type="text/css" />
+<script th:src="@{/scripts/imageselect.js}"></script>
+<script th:src="@{/scripts/movie/edit.js}"></script>
+
+<form id="saveForm" method="post">
+    <input type="hidden" name="id" id="id" th:value="${movie.id}"/>
+<div class="addInfBtn" >
+    <h3 class="itemTit"><span>编辑信息</span></h3>
+    <table class="addNewInfList">
+        <tr>
+            <th>电影名称</th>
+            <td width="240"><input class="inp-list w-200 clear-mr f-left" type="text" th:value="${movie.name}" id="name" name="name" maxlength="16" /></td>
+            <th>电影剧照</th>
+            <td width="240">
+                <select name="photo" id="photo">
+                    <option th:each="file:${files}"
+                            th:value="${file}"
+                            th:text="${file}"
+                            th:selected="${movie.photo == file}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <th>出版日期</th>
+            <td>
+                <input  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" type="text" class="inp-list w-200 clear-mr f-left" th:value="${movie.createDate} ? ${#dates.format(movie.createDate,'yyyy-MM-dd HH:mm:ss')} :''" id="createDate" name="createDate"/>
+            </td>
+
+        </tr>
+        <tr>
+            <th>增加角色</th>
+            <td width="240">
+                <select name="rolename" id="rolename">
+                    <option value="">增加角色</option>
+                    <option th:each="role:${rolelist}"
+                            th:value="${role}"
+                            th:text="${role}">
+                    </option>
+                </select>
+            </td>
+            <th>选择演员</th>
+            <td width="240">
+                <select name="actorid" id="actorid">
+                    <option value="">选择演员</option>
+                    <option th:each="actor:${actors}"
+                            th:value="${actor.id}"
+                            th:text="${actor.name}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <div class="bottomBtnBox">
+        <a class="btn-93X38 saveBtn" href="javascript:void(0)">确定</a>
+        <a class="btn-93X38 backBtn" href="javascript:closeDialog(0)">返回</a>
+    </div>
+</div>
+
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('select[name=photo]').ImageSelect({dropdownWidth:425});
+    });
+</script>
