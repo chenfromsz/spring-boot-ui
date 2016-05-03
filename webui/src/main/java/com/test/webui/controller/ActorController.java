@@ -76,8 +76,8 @@ public class ActorController {
         String size = request.getParameter("size");
         Pageable pageable = new PageRequest(page==null? 0: Integer.parseInt(page), size==null? 10:Integer.parseInt(size),
                 new Sort(Sort.Direction.DESC, "id"));
-        Page<Actor> actors = actorRepository.findAll(pageable);
-        return actors;
+
+        return actorRepository.findAll(pageable);
     }
 
 }

@@ -4,6 +4,7 @@ import com.test.data.config.Neo4jConfig;
 import com.test.data.domain.Actor;
 import com.test.data.domain.Movie;
 import com.test.data.domain.Role;
+import com.test.data.repositories.ActorRepository;
 import com.test.data.repositories.MovieRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,10 +26,13 @@ public class MovieTest {
 
     @Autowired
     MovieRepository movieRepository;
+    @Autowired
+    ActorRepository actorRepository;
 
     @Before
     public void initData(){
         movieRepository.deleteAll();
+        actorRepository.deleteAll();
 
         Movie matrix1 = new Movie();
         matrix1.setName("西游记");

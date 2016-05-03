@@ -19,13 +19,7 @@ public interface MovieRepository extends GraphRepository<Movie> {
     Movie findByName(@Param("name") String name);
 
     @Query("MATCH (m:Movie) WHERE m.name =~ ('(?i).*'+{name}+'.*') RETURN m")
-    Collection<Movie> findByNameContaining(@Param("name") String name);
-
-    @Query("MATCH (m:Movie)<-[:扮演]-(a:Actor) RETURN m.name AS movie, collect(a.name) AS cast LIMIT {limit}")
-    List<Map<String,Object>> graph(@Param("limit") int limit);
-
-    @Query("MATCH (m:Movie) WHERE m.name =~ ('(?i).*'+{name}+'.*') RETURN m")
-    Page<Movie> findByNameWithPage(@Param("name") String name, Pageable pageable);//not support yet
+    Page<Movie> findByName(@Param("name") String name, Pageable pageable);//not support yet
 }
 
 

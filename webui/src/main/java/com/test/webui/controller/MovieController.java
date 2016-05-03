@@ -4,7 +4,6 @@ import com.test.data.domain.Actor;
 import com.test.data.domain.Movie;
 import com.test.data.repositories.ActorRepository;
 import com.test.data.repositories.MovieRepository;
-import com.test.data.service.MovieService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/movie")
 public class MovieController {
     private static Logger logger = LoggerFactory.getLogger(MovieController.class);
-    @Autowired
-    private MovieService movieService;
     @Autowired
     private MovieRepository movieRepository;
     @Autowired
@@ -61,10 +57,10 @@ public class MovieController {
     public ModelAndView update(ModelMap model, @PathVariable Long id){
         Movie movie = movieRepository.findOne(id);
         String[] files = {"/images/movie/西游记.jpg","/images/movie/西游记续集.jpg"};
-        String[] rolelist = {"唐僧","孙悟空","猪八戒","沙僧"};
+        String[] rolelist = new String[]{"唐僧","孙悟空","猪八戒","沙僧"};
         Iterable<Actor> actors = actorRepository.findAll();
 
-        model.addAttribute("files",files);
+        model.addAttribute("files", files);
         model.addAttribute("rolelist",rolelist);
         model.addAttribute("movie",movie);
         model.addAttribute("actors",actors);
@@ -106,12 +102,7 @@ public class MovieController {
         String size = request.getParameter("size");
         Pageable pageable = new PageRequest(page==null? 0: Integer.parseInt(page), size==null? 10:Integer.parseInt(size),
                 new Sort(Sort.Direction.DESC, "id"));
-        Page<Movie> movies = movieRepository.findAll(pageable);
-        return movies;
-    }
 
-    @RequestMapping("/graph")
-    public Map<String, Object> graph(@RequestParam(value = "limit",required = false) Integer limit) {
-        return movieService.graph(limit == null ? 100 : limit);
+       return movieRepository.findAll(pageable);
     }
 }
