@@ -4,6 +4,10 @@ import com.test.data.domain.Actor;
 import com.test.data.domain.Movie;
 import com.test.data.repositories.ActorRepository;
 import com.test.data.repositories.MovieRepository;
+import com.test.data.service.PagesService;
+import org.neo4j.ogm.cypher.ComparisonOperator;
+import org.neo4j.ogm.cypher.Filter;
+import org.neo4j.ogm.cypher.Filters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,8 @@ public class MovieController {
     private MovieRepository movieRepository;
     @Autowired
     private ActorRepository actorRepository;
+    @Autowired
+    private PagesService<Movie> pagesService;
 
     @RequestMapping("/index")
     public ModelAndView index(){
@@ -103,6 +109,12 @@ public class MovieController {
         Pageable pageable = new PageRequest(page==null? 0: Integer.parseInt(page), size==null? 10:Integer.parseInt(size),
                 new Sort(Sort.Direction.DESC, "id"));
 
-       return movieRepository.findAll(pageable);
+        Filters filters = new Filters();
+        if (!StringUtils.isEmpty(name)) {
+            Filter filter = new Filter("name", name);
+            filters.add(filter);
+        }
+
+        return pagesService.findAll(Movie.class, pageable, filters);
     }
 }
