@@ -5,7 +5,6 @@ import com.test.data.domain.Movie;
 import com.test.data.repositories.ActorRepository;
 import com.test.data.repositories.MovieRepository;
 import com.test.data.service.PagesService;
-import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.slf4j.Logger;
