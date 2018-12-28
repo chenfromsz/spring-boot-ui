@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 @RestController
 @RequestMapping("/actor")
 public class ActorController {
@@ -30,7 +29,7 @@ public class ActorController {
 
     @RequestMapping(value="/{id}")
     public ModelAndView show(ModelMap model,@PathVariable Long id) {
-        Actor actor = actorRepository.findOne(id);
+        Actor actor = actorRepository.findById(id).get();
         model.addAttribute("actor",actor);
         return new ModelAndView("actor/show");
     }
@@ -49,7 +48,7 @@ public class ActorController {
 
     @RequestMapping(value="/edit/{id}")
     public ModelAndView update(ModelMap model,@PathVariable Long id){
-        Actor actor = actorRepository.findOne(id);
+        Actor actor = actorRepository.findById(id).get();
         model.addAttribute("actor",actor);
         return new ModelAndView("actor/edit");
     }
@@ -63,7 +62,7 @@ public class ActorController {
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     public String delete(@PathVariable Long id) throws Exception{
-        Actor actor = actorRepository.findOne(id);
+        Actor actor = actorRepository.findById(id).get();
         actorRepository.delete(actor);
         logger.info("删除->ID="+id);
         return "1";
@@ -74,8 +73,8 @@ public class ActorController {
         String name = request.getParameter("name");
         String page = request.getParameter("page");
         String size = request.getParameter("size");
-        Pageable pageable = new PageRequest(page==null? 0: Integer.parseInt(page), size==null? 10:Integer.parseInt(size),
-                new Sort(Sort.Direction.DESC, "id"));
+        Pageable pageable = PageRequest.of(page==null? 0: Integer.parseInt(page), size==null? 10:Integer.parseInt(size),
+                Sort.by(Sort.Direction.DESC, "id"));
 
         return actorRepository.findAll(pageable);
     }

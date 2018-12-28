@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorator="fragments/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="fragments/layout">
 <head>
     <title>电影管理</title>
 
@@ -9,13 +10,12 @@
     <link th:href="@{/styles/index.css}" rel="stylesheet"  type="text/css"/>
 
     <script th:src="@{/scripts/pagination/jquery.pagination.js}"></script>
-    <script th:src="@{/scripts/jquery.smartselect-1.1.min.js}"></script>
     <script th:src="@{/scripts/My97DatePicker/WdatePicker.js}"></script>
     <script th:src="@{/scripts/movie/list.js}"></script>
 </head>
 <body>
 <div class="locationLine" layout:fragment="prompt">
-    当前位置：首页 &gt; <em >电影管理</em>
+    当前位置：首页 &gt; <em>电影管理</em>
 </div>
 
 <div class="statisticBox w-782"  layout:fragment="content">

@@ -29,9 +29,9 @@ public class PagesService<T> {
 
     private Page<T> updatePage(Pageable pageable, List<T> results) {
         int pageSize = pageable.getPageSize();
-        int pageOffset = pageable.getOffset();
-        int total = pageOffset + results.size() + (results.size() == pageSize?pageSize:0);
-        return new PageImpl(results, pageable, (long)total);
+        long pageOffset = pageable.getOffset();
+        long total = pageOffset + results.size() + (results.size() == pageSize?pageSize:0);
+        return new PageImpl(results, pageable, total);
     }
 
     private SortOrder convert(Sort sort) {

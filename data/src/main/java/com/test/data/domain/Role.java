@@ -2,15 +2,13 @@ package com.test.data.domain;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.voodoodyne.jackson.jsog.JSOGGenerator;
-import org.neo4j.ogm.annotation.EndNode;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.RelationshipEntity;
-import org.neo4j.ogm.annotation.StartNode;
+import org.neo4j.ogm.annotation.*;
 
 @JsonIdentityInfo(generator=JSOGGenerator.class)
 @RelationshipEntity(type = "扮演")
 public class Role {
-    @GraphId
+    @Id
+    @GeneratedValue
     Long id;
     String name;
     @StartNode

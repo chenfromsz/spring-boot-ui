@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="pragma" content="no-cache" />
@@ -9,7 +9,7 @@
     <title layout:title-pattern="$DECORATOR_TITLE - $CONTENT_TITLE">UI演示</title>
     <link th:href="@{/styles/global.css}"  rel="stylesheet" type="text/css"/>
     <script th:src="@{/scripts/jquery.min.js}"></script>
-    <script th:src="@{/scripts/artDialog/artDialog.js}" />
+    <script th:src="@{/scripts/artDialog/artDialog.js}"></script>
     <script th:src="@{/scripts/common.js}"></script>
     <script th:src="@{/scripts/public/public.js}"></script>
     <script th:src="@{/scripts/public/json2.js}"></script>

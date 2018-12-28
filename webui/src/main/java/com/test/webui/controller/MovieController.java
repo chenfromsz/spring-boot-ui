@@ -5,6 +5,7 @@ import com.test.data.domain.Movie;
 import com.test.data.repositories.ActorRepository;
 import com.test.data.repositories.MovieRepository;
 import com.test.data.service.PagesService;
+import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.slf4j.Logger;
@@ -39,7 +40,7 @@ public class MovieController {
 
     @RequestMapping(value="/{id}")
     public ModelAndView show(ModelMap model, @PathVariable Long id) {
-        Movie movie = movieRepository.findOne(id);
+        Movie movie = movieRepository.findById(id).get();
         model.addAttribute("movie",movie);
         return new ModelAndView("movie/show");
     }
@@ -60,7 +61,7 @@ public class MovieController {
 
     @RequestMapping(value="/edit/{id}")
     public ModelAndView update(ModelMap model, @PathVariable Long id){
-        Movie movie = movieRepository.findOne(id);
+        Movie movie = movieRepository.findById(id).get();
         String[] files = {"/images/movie/西游记.jpg","/images/movie/西游记续集.jpg"};
         String[] rolelist = new String[]{"唐僧","孙悟空","猪八戒","沙僧"};
         Iterable<Actor> actors = actorRepository.findAll();
@@ -78,13 +79,13 @@ public class MovieController {
         String rolename = request.getParameter("rolename");
         String actorid = request.getParameter("actorid");
 
-        Movie old = movieRepository.findOne(movie.getId());
+        Movie old = movieRepository.findById(movie.getId()).get();
         old.setName(movie.getName());
         old.setPhoto(movie.getPhoto());
         old.setCreateDate(movie.getCreateDate());
 
         if(!StringUtils.isEmpty(rolename) && !StringUtils.isEmpty(actorid)) {
-            Actor actor = actorRepository.findOne(new Long(actorid));
+            Actor actor = actorRepository.findById(new Long(actorid)).get();
             old.addRole(actor, rolename);
         }
         movieRepository.save(old);
@@ -94,7 +95,7 @@ public class MovieController {
 
     @RequestMapping(value="/delete/{id}",method = RequestMethod.GET)
     public String delete(@PathVariable Long id) throws Exception{
-        Movie movie = movieRepository.findOne(id);
+        Movie movie = movieRepository.findById(id).get();
         movieRepository.delete(movie);
         logger.info("删除->ID="+id);
         return "1";
@@ -105,15 +106,18 @@ public class MovieController {
         String name = request.getParameter("name");
         String page = request.getParameter("page");
         String size = request.getParameter("size");
-        Pageable pageable = new PageRequest(page==null? 0: Integer.parseInt(page), size==null? 10:Integer.parseInt(size),
-                new Sort(Sort.Direction.DESC, "id"));
+        Pageable pageable = PageRequest.of(page==null? 0 : Integer.parseInt(page), size==null? 10:Integer.parseInt(size),
+                Sort.by(Sort.Direction.DESC, "id"));
 
         Filters filters = new Filters();
         if (!StringUtils.isEmpty(name)) {
-            Filter filter = new Filter("name", name);
+            Filter filter = new Filter("name", ComparisonOperator.LIKE, name);
+
             filters.add(filter);
         }
 
-        return pagesService.findAll(Movie.class, pageable, filters);
+        Page<Movie> movies = pagesService.findAll(Movie.class, pageable, filters);
+
+        return movies;
     }
 }
